@@ -9,7 +9,7 @@ botão de voltar. Cada aplicação passa suas configurações via `AppConfig` e
 herda de `BaseApp`, implementando apenas a lógica de negócio.
 
 Exemplo mínimo de uso:
-    from UI_main import AppConfig, BaseApp
+    from eop_ui import AppConfig, BaseApp
 
     class MeuApp(BaseApp):
         def __init__(self):
@@ -22,23 +22,18 @@ Exemplo mínimo de uso:
         app.protocol("WM_DELETE_WINDOW", app.safe_exit)
         app.mainloop()
 """
-
 from __future__ import annotations
 
-import os
-import sys
-import time
-from dataclasses import dataclass
-from pathlib import Path
-from tkinter import Menu, messagebox
 from typing import Callable, Optional
-
+from tkinter import Menu, messagebox
+from dataclasses import dataclass
 import customtkinter as ctk
+from pathlib import Path
 from PIL import Image
+import time
+import sys
+import os
 
-# ---------------------------------------------------------------------------
-# Tema global – aplicado uma única vez no import da biblioteca
-# ---------------------------------------------------------------------------
 ctk.set_appearance_mode("Light")
 ctk.set_default_color_theme("dark-blue")
 
@@ -185,17 +180,6 @@ class AppConfig:
 class BaseApp(ctk.CTk):
     """
     Classe base para aplicações CustomTkinter padronizadas.
-
-    Herdar desta classe e implementar a lógica de negócio.
-    Toda a infraestrutura de janela, fontes, telas e utilitários
-    já está disponível via herança.
-
-    Fluxo típico de uso:
-        1. Chamar super().__init__(config) com um AppConfig configurado.
-        2. Exibir a primeira tela: self.show_login_frame() ou outra.
-        3. Implementar _on_login() para reagir ao login bem-sucedido.
-        4. Usar show_execution_frame() + log() + update_progress() para
-           a tela de execução com automação em thread separada.
     """
 
     def __init__(self, config: AppConfig):
@@ -222,7 +206,7 @@ class BaseApp(ctk.CTk):
         self.font_label  = ctk.CTkFont(family=f, size=self.cfg.font_body_size,   weight="normal")
 
         # ------------------------------------------------------------------
-        # Container principal (todas as telas renderizam aqui)
+        # Container principal
         # ------------------------------------------------------------------
         self.main_container = ctk.CTkFrame(self, fg_color="transparent")
         self.main_container.pack(fill="both", expand=True, padx=20, pady=20)
@@ -342,7 +326,7 @@ class BaseApp(ctk.CTk):
             self.messagebox_error("Erro", "Manual não encontrado.")
 
     # =======================================================================
-    # FÁBRICA DE WIDGETS
+    # WIDGETS
     # =======================================================================
 
     def make_primary_button(
@@ -416,7 +400,7 @@ class BaseApp(ctk.CTk):
         Parâmetros
         ----------
         on_success  : Callback chamado com (usuario, senha) após o clique no
-                      botão de login. Se None, `_on_login()` é chamado.
+                      botão de login.
         menu_items  : Itens extras para a barra de menu (mesmo formato de
                       `create_menu(extra_items=...)`).
 
@@ -529,7 +513,6 @@ class BaseApp(ctk.CTk):
         self._senha   = self._entry_pass.get()
         self.unbind("<Return>")
 
-        # Dispara o callback estrito sem fallback
         if self._login_callback:
             self._login_callback(self._usuario, self._senha)
 
@@ -666,14 +649,6 @@ class BaseApp(ctk.CTk):
                 self._progress_bar.set(0.0)
                 self._progress_label.set("Processando... (0%)")
         self.after(0, _reset)
-
-    def start_indeterminate(self):
-        """Coloca a barra no modo indeterminado (animação giratória). Thread-safe."""
-        def _start():
-            if hasattr(self, "_progress_bar") and self._progress_bar.winfo_exists():
-                self._progress_bar.configure(mode="indeterminate")
-                self._progress_bar.start()
-        self.after(0, _start)
 
     # =======================================================================
     # MENSAGENS — sempre com topmost para não ficar atrás da janela principal
