@@ -1,0 +1,8 @@
+pyproject.toml
+TesouroEOP_UI.egg-info/PKG-INFO
+TesouroEOP_UI.egg-info/SOURCES.txt
+TesouroEOP_UI.egg-info/dependency_links.txt
+TesouroEOP_UI.egg-info/requires.txt
+TesouroEOP_UI.egg-info/top_level.txt
+eop_ui/__init__.py
+eop_ui/main.py

@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = ""
+name = "TesouroEOP-UI"
 version = "1.0.0"
 description = "Biblioteca para padronização da interface gráfica (UI) nos programas do Tesouro do Estado do Rio de Janeiro"
 readme = "README.md"
@@ -16,10 +16,9 @@ classifiers = [
 ]
 dependencies = [
     "selenium",
-    "automaweb",
     "requests",
     "msal",
     "setuptools"
 ]
 [project.urls]
-"Homepage" = "https://github.com/bvkila/jupiter"
+"Homepage" = "https://github.com/matheusrbr11/eop-ui"

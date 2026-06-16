@@ -1,0 +1,15 @@
+Metadata-Version: 2.4
+Name: TesouroEOP-UI
+Version: 0.0.2
+Summary: Biblioteca para padronização da interface gráfica (UI) nos programas do Tesouro do Estado do Rio de Janeiro
+Author: EOP/SUPCONC
+License: MIT
+Project-URL: Homepage, https://github.com/matheusrbr11/eop-ui
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+Requires-Dist: selenium
+Requires-Dist: requests
+Requires-Dist: msal
+Requires-Dist: setuptools
