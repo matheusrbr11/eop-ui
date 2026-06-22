@@ -555,9 +555,9 @@ class BaseApp(ctk.CTk):
             font=self.font_header,
         ).pack(pady=10)
 
-        self._progress_bar = ctk.CTkProgressBar(self.main_container, width=400, mode="indeterminate")
+        self._progress_bar = ctk.CTkProgressBar(self.main_container, width=400, mode="determinate")
         self._progress_bar.pack(pady=10)
-        self._progress_bar.start()
+        self._progress_bar.set(0)
 
         self._log_box = ctk.CTkTextbox(self.main_container, width=450, height=350)
         self._log_box.pack(pady=10)
@@ -598,8 +598,6 @@ class BaseApp(ctk.CTk):
         def _update():
             if not hasattr(self, "_progress_bar") or not self._progress_bar.winfo_exists():
                 return
-            self._progress_bar.stop()
-            self._progress_bar.configure(mode="determinate")
             self._progress_bar.set(max(0.0, min(1.0, value)))
             text = label if label else f"Processando... ({int(value * 100)}%)"
             self._progress_label.set(text)
@@ -625,8 +623,6 @@ class BaseApp(ctk.CTk):
         """
         def _finalize():
             if hasattr(self, "_progress_bar") and self._progress_bar.winfo_exists():
-                self._progress_bar.stop()
-                self._progress_bar.configure(mode="determinate")
                 self._progress_bar.set(1.0)
                 self._progress_label.set(label)
 
@@ -644,8 +640,6 @@ class BaseApp(ctk.CTk):
         """Reinicia a barra de progresso para 0% em modo determinado. Thread-safe."""
         def _reset():
             if hasattr(self, "_progress_bar") and self._progress_bar.winfo_exists():
-                self._progress_bar.stop()
-                self._progress_bar.configure(mode="determinate")
                 self._progress_bar.set(0.0)
                 self._progress_label.set("Processando... (0%)")
         self.after(0, _reset)
