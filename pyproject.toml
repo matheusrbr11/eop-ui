@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "TesouroEOP-UI"
-version = "1.0.0"
+version = "1.0.3"
 description = "Biblioteca para padronização da interface gráfica (UI) nos programas do Tesouro do Estado do Rio de Janeiro"
 readme = "README.md"
 authors = [{ name = "EOP/SUPCONC"}]
@@ -15,10 +15,8 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "selenium",
-    "requests",
-    "msal",
-    "setuptools"
+    "customtkinter>=5.2.0",
+    "Pillow>=10.0.0"
 ]
 [project.urls]
-"Homepage" = "https://github.com/matheusrbr11/eop-ui"
+"Homepage" = "https://github.com/matheusrbr11/TesouroEOP-UI"
